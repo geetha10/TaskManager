@@ -9,6 +9,8 @@ import Main from './components/Main';
 import Details from './components/Details';
 import Create from './components/Create';
 import Update from './components/Update'
+import CreateTask from './components/CreateTask';
+import UpdateTask from './components/UpdateTask';
 import style from "./components/style.css"
 
 function App() {
@@ -20,13 +22,19 @@ function App() {
           <Create />
         </Route>
         <Route path="/projects/:id/edit">
-            <Update />
-          </Route>
+          <Update />
+        </Route>
         <Route path="/projects/:id">
           <Details />
         </Route>
         <Route path="/projects/">
           <Main />
+        </Route>
+        <Route path="/project/:id/task/new">
+          <CreateTask />
+        </Route>
+        <Route path="/task/:id/edit">
+          <UpdateTask />
         </Route>
         <Route path="/">
           <Redirect to="/projects" />
