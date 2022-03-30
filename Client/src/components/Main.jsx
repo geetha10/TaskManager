@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import style from "./style.css"
+import 'bootstrap/dist/css/bootstrap.css';
 const Main = (props) => {
     const [projects, setProjects] = useState([]);
 
@@ -38,7 +39,7 @@ const Main = (props) => {
             <div className='topbar'>
                 <h1>Task Manager</h1>
                 <div className='topRight'>
-                    <button>
+                    <button className='btn btn-info btn-outline-dark'>
                         <Link to="/">Log Out</Link>
                     </button>
 
@@ -52,7 +53,7 @@ const Main = (props) => {
                 <div className='mid1'>
                     <div className='filter'>
                         <label htmlFor="sorted">sorted by:</label>
-                        <select name="sorted" id="sorted">
+                        <select name="sorted" id="sorted" className='custom-select'>
                             <option value="quarter">Due in 90 days</option>
                             <option value="priority">Priority - high to low</option>
                         </select>

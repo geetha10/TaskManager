@@ -11,31 +11,42 @@ import Create from './components/Create';
 import Update from './components/Update'
 import CreateTask from './components/CreateTask';
 import UpdateTask from './components/UpdateTask';
+import DetailTask from './components/DetailTask';
 import style from "./components/style.css"
 
 function App() {
   return (
     <div className="App">
       <Switch>
-        {/* route long to short */}
+        {/* project create */}
         <Route path="/projects/new">
           <Create />
         </Route>
+        {/* task create */}
+        <Route path="/projects/:id/task/new">
+          <CreateTask />
+        </Route>
+        {/* project update */}
         <Route path="/projects/:id/edit">
           <Update />
         </Route>
+        {/* project review */}
         <Route path="/projects/:id">
           <Details />
         </Route>
+        {/* dashboard */}
         <Route path="/projects/">
           <Main />
         </Route>
-        <Route path="/project/:id/task/new">
-          <CreateTask />
-        </Route>
+        {/* task update */}
         <Route path="/task/:id/edit">
           <UpdateTask />
         </Route>
+        {/* task review */}
+        <Route path="/task/:id">
+          <DetailTask />
+        </Route>
+        {/* in case of random routes */}
         <Route path="/">
           <Redirect to="/projects" />
         </Route>

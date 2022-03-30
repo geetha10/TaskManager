@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import style from "./style.css"
-
+// import style from "./style.css"
+import 'bootstrap/dist/css/bootstrap.css';
 
 const Create = (props) => {
 
@@ -108,8 +108,8 @@ const Create = (props) => {
                 <div className='topbar'>
                     <h1>Task Manager</h1>
                     <div className='topRight'>
-                        <button><Link to="/">Home</Link></button>
-                        <button>
+                        <button className='btn btn-info'><Link to="/">Home</Link></button>
+                        <button className='btn btn-info'>
                             <Link to="/">Log Out</Link>
                         </button>
 
@@ -124,7 +124,7 @@ const Create = (props) => {
 
                 {errors.map((err, index) => <p style={{ color: "red" }} key={index}>{err}</p>)}
                 <form onSubmit={createProject}>
-                    <table>
+                    <table className='table'>
                         <tbody>
                             <tr>
                                 <td>
@@ -181,11 +181,13 @@ const Create = (props) => {
                     {/* <p>{priorityErr}</p> */}
                     {/* <p>{duedateErr}</p> */}
                     {/* <p>{teammembersErr}</p> */}
-                    <button>Create Project</button>
+                    <div className='d-flex justify-content-end'>
+                        <button className='btn btn-primary'>Create Project</button>
+                        <Link className='btn btn-danger' to="/">Cancel</Link>
+                    </div>
+
                 </form>
-                <button>
-                    <Link to="/">Cancel</Link>
-                </button>
+
             </div>
         </>
     )

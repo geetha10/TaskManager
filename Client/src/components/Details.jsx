@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import style from "./style.css"
-
+import 'bootstrap/dist/css/bootstrap.css';
 
 const Detail = (props) => {
     const [project, setProject] = useState({});
@@ -37,8 +37,8 @@ const Detail = (props) => {
             <div className='topbar'>
                 <h1>Task Manager</h1>
                 <div className='topRight'>
-                    <button><Link to="/">Home</Link></button>
-                    <button>
+                    <button className='btn btn-info'><Link to="/">Home</Link></button>
+                    <button className='btn btn-info'>
                         <Link to="/">Log Out</Link>
                     </button>
 
@@ -55,7 +55,7 @@ const Detail = (props) => {
                 <br />
                 <h2>View One</h2><br />
                 <div>
-                    <table>
+                    <table className='table'>
                         <tbody>
                             <tr>
                                 <td>Project Name:</td>
@@ -84,7 +84,7 @@ const Detail = (props) => {
                             <tr>
                                 <td>Invite a friend:</td>
                                 <td>
-                                    <input type="text" />    <button>send</button>
+                                    <input type="text" />    <button className='btn btn-primary'>send</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -111,11 +111,12 @@ const Detail = (props) => {
 
                 </div>
                 <div className='add-task'>
-                    <button>Add Task</button>
+                    <button className='btn btn-success'>Add Task</button>
                 </div>
             </div>
             <div className='edit-delete'>
-                <button className='edit-btn'><Link to={"/projects/update/" + project._id } className='bLink'>Edit</Link></button><button>Delete</button>
+                <Link to={"/projects/" + project._id+"/edit" } className='btn btn-warning'>Edit</Link>
+                <button className='btn btn-danger'>Delete</button>
             </div>
         </>
     )
