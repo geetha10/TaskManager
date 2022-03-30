@@ -12,6 +12,7 @@ import Update from './components/Update'
 import CreateTask from './components/CreateTask';
 import UpdateTask from './components/UpdateTask';
 import DetailTask from './components/DetailTask';
+import  Login  from './components/login';
 import style from "./components/style.css"
 
 function App() {
@@ -45,6 +46,10 @@ function App() {
         {/* task review */}
         <Route path="/task/:id">
           <DetailTask />
+        </Route>
+        {/* login/reg */}
+        <Route path="/login">
+          <Login/>
         </Route>
         {/* in case of random routes */}
         <Route path="/">
