@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import style from "./style.css"
 
@@ -8,6 +8,7 @@ import style from "./style.css"
 const Detail = (props) => {
     const [thisProject, setThisProject] = useState({});
     const { id } = useParams();
+    const history = useHistory();
     const [tasks, setTasks] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
     const [isLoaded2, setIsLoaded2] = useState(false);
@@ -24,7 +25,6 @@ const Detail = (props) => {
             .then(data => {setIsLoaded(true); setThisProject(data);})
         }, [])
 
-            //This gets the viewTasks
     useEffect(() => {
         fetch(`http://localhost:8000/api/tasks/${id}`, {
             method: 'GET',
@@ -36,14 +36,27 @@ const Detail = (props) => {
         .then(data => {setIsLoaded2(true); setTasks(data);})
     }, [])
 
+    function handleProjectDelete() {
+        fetch("http://localhost:8000/api/projects/" + id, {
+                method: 'DELETE',
+                headers: {
+                    "x-access-token" : localStorage.getItem("token")
+                }
+            })
+            //Todo: push to projectid
+            .then(a => history.push(`/profile`));
+            
+            
+    }
+
     return (
         <>
             <div className='topbar'>
                 <h1>Task Manager</h1>
                 <div className='topRight'>
-                    <button><Link to="/">Home</Link></button>
+                <button><Link to="/profile">Home</Link></button>
                     <button>
-                        <Link to="/">Log Out</Link>
+                        <Link to="/logOut">Log Out</Link>
                     </button>
 
                 </div>
@@ -115,7 +128,7 @@ const Detail = (props) => {
             </div>
             </div>
             <div className='edit-delete'>
-                <button className='edit-btn'><Link to={"/projects/update/" + id } className='bLink'>Edit</Link></button><button>Delete</button>
+                <button className='edit-btn'><Link to={"/projects/" + thisProject._id + "/edit"} className='bLink'>Edit</Link></button><button onClick={handleProjectDelete}>Delete</button>
             </div>
         </>
     )

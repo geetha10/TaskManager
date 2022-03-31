@@ -41,13 +41,17 @@ export function UpdateTask() {
     return(
         <div>
             <h1>Task Form</h1>
+            <button><Link to="/profile">Home</Link></button>
+            <button>
+                <Link to="/logOut">Log Out</Link>
+            </button>
             <form onSubmit={e => handleTaskSubmit(e)}>
                 <label>Name: </label><input required type="text"/><br/>
                 <label>Details: </label><input required type="textarea"/><br/>
                 <label>Complete: </label><input type="checkbox"/><br/>
                 <button type="submit">Update Task</button>
             </form>
-            <Link to={`/profile`}>Cancel</Link>
+            <Link to={`/task/${id}`}>Cancel</Link>
             <div>
                 {
                     // JSON.stringify(tasks)

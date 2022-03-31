@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import style from "./style.css"
 
@@ -11,6 +11,7 @@ export function ViewOneTask () {
     const [thisTask, setThisTask] = useState({});
     const [isLoaded, setIsLoaded] = useState(false);
     console.log(id);
+    const history = useHistory();
 
     useEffect(() => {
             fetch("http://localhost:8000/api/task/" + id, {
@@ -23,15 +24,28 @@ export function ViewOneTask () {
             .then(data => {setIsLoaded(true); setThisTask(data);})
         }, [])
 
+    function handleTaskDelete() {
+        fetch("http://localhost:8000/api/task/" + id, {
+                method: 'DELETE',
+                headers: {
+                    "x-access-token" : localStorage.getItem("token")
+                }
+            })
+            //Todo: push to projectid
+            .then(a => history.push(`/profile`));
+            
+            
+    }
+
     return (
         <>
             <div className='topbar'>
                 <h1>Task Manager</h1>
                 <div className='topRight'>
-                    <button><Link to="/">Home</Link></button>
-                    <button>
-                        <Link to="/">Log Out</Link>
-                    </button>
+                <button><Link to="/profile">Home</Link></button>
+                <button>
+                    <Link to="/logOut">Log Out</Link>
+                </button>
 
                 </div>
             </div>
@@ -65,7 +79,7 @@ export function ViewOneTask () {
                 </div>
             </div>
             <div className='edit-delete'>
-                <button className='edit-btn'><Link to={"/task/update/" + id } className='bLink'>Edit</Link></button><button>Delete</button>
+                <button className='edit-btn'><Link to={"/task/update/" + id } className='bLink'>Edit</Link></button><button onClick={handleTaskDelete}>Delete</button>
             </div>
         </>
     )

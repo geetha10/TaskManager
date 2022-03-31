@@ -38,8 +38,9 @@ const Main = (props) => {
             <div className='topbar'>
                 <h1>Task Manager</h1>
                 <div className='topRight'>
+                <button><Link to="/profile">Home</Link></button>
                     <button>
-                        <Link to="/">Log Out</Link>
+                        <Link to="/logOut">Log Out</Link>
                     </button>
 
                 </div>
