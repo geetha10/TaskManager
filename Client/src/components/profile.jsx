@@ -68,6 +68,9 @@ export function Profile() {
                 }
             </div> */}
             <Create/>
+            {
+                JSON.stringify(items)
+            }
         </div>
 
     )

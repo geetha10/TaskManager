@@ -14,7 +14,7 @@ const Create = (props) => {
     const [description, setDescription] = useState("");
     const [priority, setPriority] = useState("");
     const [teammembers, setTeammembers] = useState("");
-    const [duedate, setDuedate] = useState("")
+    const [dueDate, setDuedate] = useState("")
 
 
     const [errors, setErrors] = useState([]);
@@ -49,7 +49,7 @@ const Create = (props) => {
         const newProject = {
             projectName: projectName,
             description: description,
-            duedate: duedate,
+            dueDate: dueDate,
             teammembers: teammembers,
             priority: priority,
             //creator : user
@@ -152,7 +152,7 @@ const Create = (props) => {
                                     Due Date:
                                 </td>
                                 <td>
-                                    <input type="date" onChange={e => setDuedate(e.target.value)} value={duedate} /> <br />
+                                    <input type="date" onChange={e => setDuedate(e.target.value)} value={dueDate} /> <br />
 
                                 </td>
                             </tr>
