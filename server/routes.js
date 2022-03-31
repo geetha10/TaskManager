@@ -22,4 +22,6 @@ module.exports = function(app){
     app.get("/api/tasks/:projectId", userController.verifyJWT, taskController.tasksOfOneProject)
     app.post("/api/tasks/:projectId", userController.verifyJWT, taskController.addTask2)
     app.get("/api/tasks", userController.verifyJWT, taskController.allTasks)
+    app.put("/api/task/update/:id", userController.verifyJWT, taskController.editTask)
+    app.get("/api/task/:id", userController.verifyJWT, taskController.oneTask);
 }
