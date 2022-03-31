@@ -68,3 +68,9 @@ module.exports.oneTask = (req, res) => {
         .then(oneTask => res.json(oneTask))
         .catch(err => res.status(400).json(err))
 }
+
+module.exports.deleteTask = (req, res) => {
+    Task.deleteOne({ _id: req.params.id })
+        .then(response => res.json(response))
+        .catch(err => res.status(400).json(err))
+}

@@ -24,4 +24,5 @@ module.exports = function(app){
     app.get("/api/tasks", userController.verifyJWT, taskController.allTasks)
     app.put("/api/task/update/:id", userController.verifyJWT, taskController.editTask)
     app.get("/api/task/:id", userController.verifyJWT, taskController.oneTask);
+    app.delete("/api/task/:id", userController.verifyJWT, taskController.deleteTask);
 }

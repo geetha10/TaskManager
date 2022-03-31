@@ -47,7 +47,7 @@ export function UpdateTask() {
                 <label>Complete: </label><input type="checkbox"/><br/>
                 <button type="submit">Update Task</button>
             </form>
-            <Link to={`/profile`}>Cancel</Link>
+            <Link to={`/task/${id}`}>Cancel</Link>
             <div>
                 {
                     // JSON.stringify(tasks)
