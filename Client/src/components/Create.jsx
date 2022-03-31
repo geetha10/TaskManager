@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import style from "./style.css"
 
 
 
@@ -29,22 +27,9 @@ const Create = (props) => {
 
     const [projects, setProjects] = useState([]);
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:8000/api/projects')
-    //         .then(res => {
-    //             setProjects(res.data);
-    //             // console.log(projects);
-    //         })
-    //         .catch(err => console.error(err));
-    // }, []);
-    // }
-
-
-
     const createProject = (e) => {
         e.preventDefault();
-        //const user =  User.findOne({username : req.user.username})
-        //const form = e.target;
+
         console.log("In createProject method", projectName)
         const newProject = {
             projectName: projectName,
@@ -52,44 +37,28 @@ const Create = (props) => {
             dueDate: dueDate,
             teammembers: teammembers,
             priority: priority,
-            //creator : user
+
         }
         // POST to the db, with the obj
         fetch("http://localhost:8000/api/projects", {
             method: "POST",
             headers: {
-                "Content-type" : "application/json",
-                "x-access-token" : localStorage.getItem("token")
+                "Content-type": "application/json",
+                "x-access-token": localStorage.getItem("token")
             },
             body: JSON.stringify(newProject)
         })
-        // axios.post("http://localhost:8000/api/projects", newProject)
-        //     .then(res => {
-        //         console.log(res.data);
-        //         console.log("SUCCESS CLIENT");
-        //         history.push("/profile")
-        //     })
-        //     .catch(err => {
-        //         console.log("❌ ERROR CLIENT")
-        //         console.log(err.response.data)
-
-        //         // alternate way
-        //         const { errors } = err.response.data;
-        //         const messages = Object.keys(errors).map(error => errors[error].message)
-        //         console.log(messages);
-        //         setErrors(messages);
-
-        //     })
+        history.push("/profile")
     }
 
     useEffect(() => {
         fetch("/user/isUserAuth", {
             headers: {
-                "x-access-token" : localStorage.getItem("token")
+                "x-access-token": localStorage.getItem("token")
             }
         })
-        .then(res => res.json())
-        .then(data => data.isLoggedIn ? null : history.push("/"))
+            .then(res => res.json())
+            .then(data => data.isLoggedIn ? null : history.push("/"))
     }, [])
 
     return (
@@ -166,10 +135,10 @@ const Create = (props) => {
                             </tr>
                         </tbody>
                     </table>
-                    <button>Create Project</button>
+                    <button onClick={createProject}>Create Project</button>
                 </form>
                 <button>
-                    <Link to="/">Cancel</Link>
+                    <Link to="/profile">Cancel</Link>
                 </button>
             </div>
         </>
