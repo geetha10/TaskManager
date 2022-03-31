@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const Create = (props) => {
+const Update = (props) => {
 
     const history = useHistory();
     const {id} = useParams();
@@ -142,4 +142,4 @@ const Create = (props) => {
     )
 }
 
-export default Create
+export default Update
