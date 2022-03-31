@@ -6,31 +6,35 @@ import style from "./style.css"
 
 
 const Detail = (props) => {
-    const [project, setProject] = useState({});
-    const [tasks, setTasks] = useState({});
-    const [status, setStatis] = useState("Ongoing");
-    const [duration, setDuration] = useState("");
-    const [hookHand, setHookHand] = useState("No");
+    const [thisProject, setThisProject] = useState({});
     const { id } = useParams();
+    const [tasks, setTasks] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoaded2, setIsLoaded2] = useState(false);
     console.log(id);
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:8000/api/projects/' + id)
-    //         .then(res => {
-    //             console.log(res.data);
-    //             setProject(res.data)
-    //             if(res.data.eye){
-    //                 setEyePatch("Yes");
-    //             }
-    //             if(res.data.leg){
-    //                 setPegLag("Yes");
-    //             }
-    //             if(res.data.hand){
-    //                 setHookHand("Yes");
-    //             }
-    //         })
-    //         .catch(err => console.error(err));
-    // }, [id]);
+    useEffect(() => {
+            fetch("http://localhost:8000/api/projects/" + id, {
+                method: 'GET',
+                headers: {
+                    "x-access-token" : localStorage.getItem("token")
+                }
+            })
+            .then(res => res.json())
+            .then(data => {setIsLoaded(true); setThisProject(data);})
+        }, [])
+
+            //This gets the viewTasks
+    useEffect(() => {
+        fetch(`http://localhost:8000/api/tasks/${id}`, {
+            method: 'GET',
+            headers: {
+                "x-access-token" : localStorage.getItem("token")
+            }
+        })
+        .then(res => res.json())
+        .then(data => {setIsLoaded2(true); setTasks(data);})
+    }, [])
 
     return (
         <>
@@ -59,27 +63,23 @@ const Detail = (props) => {
                         <tbody>
                             <tr>
                                 <td>Project Name:</td>
-                                <td>{project.name}</td>
+                                <td>{thisProject.projectName}</td>
                             </tr>
                             <tr>
-                                <td>Details:</td>
-                                <td>{project.details}</td>
+                                <td>Description:</td>
+                                <td>{thisProject.description}</td>
                             </tr>
                             <tr>
                                 <td>Priority:</td>
-                                <td>{project.priority}</td>
+                                <td>{thisProject.priority}</td>
                             </tr>
                             <tr>
-                                <td>Status:</td>
-                                <td>{status}</td>
-                            </tr>
-                            <tr>
-                                <td>TimeFrame with Duration:</td>
-                                <td>{duration}</td>
+                                <td>Due Date:</td>
+                                <td>{thisProject.dueDate}</td>
                             </tr>
                             <tr>
                                 <td>Team Members:</td>
-                                <td>{project.teamMembers}</td>
+                                <td>{thisProject.teammates}</td>
                             </tr>
                             <tr>
                                 <td>Invite a friend:</td>
@@ -91,31 +91,31 @@ const Detail = (props) => {
                     </table>
                 </div>
             </div>
+            {
+                JSON.stringify(tasks)
+            }
             <div className='task-control'>
 
-                <div className='task-list'>
+                <div className='task-list'> 
                     {
-                        // tasks.map((task, idx) => {
-                        //     return (
-                        //         <div className='taskCard' key={task._id} >
-                        //             <img className='taskImg' src={task.url} alt={task.name} />
-                        //             <h5>
-                        //                 <Link to={"/tasks/" + task._id} className='bLink'>{task.name}</Link>
-                        //             </h5>
-                        //         </div>
-                        //     )
-                        // })
+                        tasks.map((task, idx) => {
+                            return (
+                                <div className='taskCard' key={task._id} >
+                                    <h5>
+                                        <Link to={"/task/" + task._id} className='bLink'>{task.taskName}</Link>
+                                    </h5>
+                                </div>
+                            )
+                        })
                     }
-                    <a href="/">Task1</a>
-                    <a href="/">Task2</a>
 
-                </div>
+            </div>
                 <div className='add-task'>
-                    <button>Add Task</button>
-                </div>
+                    <Link to={"/tasks/" + thisProject._id}>Add Task</Link>
+            </div>
             </div>
             <div className='edit-delete'>
-                <button className='edit-btn'><Link to={"/projects/update/" + project._id } className='bLink'>Edit</Link></button><button>Delete</button>
+                <button className='edit-btn'><Link to={"/projects/update/" + id } className='bLink'>Edit</Link></button><button>Delete</button>
             </div>
         </>
     )
