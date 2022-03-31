@@ -10,6 +10,7 @@ const Create = (props) => {
 
     const [projectName, setProjectName] = useState("");
     const [description, setDescription] = useState("");
+    const [status, setStatus]= useState(false)
     const [priority, setPriority] = useState("");
     const [teammembers, setTeammembers] = useState("");
     const [dueDate, setDuedate] = useState("")
@@ -37,6 +38,7 @@ const Create = (props) => {
             dueDate: Date(dueDate),
             teammembers: teammembers,
             priority: priority,
+            status:status
 
         }
         // POST to the db, with the obj
@@ -67,11 +69,8 @@ const Create = (props) => {
                 <div className='topbar'>
                     <h1>Task Manager</h1>
                     <div className='topRight'>
-                        <button><Link to="/">Home</Link></button>
-                        <button>
-                            <Link to="/">Log Out</Link>
-                        </button>
-
+                        <Link className='btn btn-primary' to="/profile">Home</Link>
+                        <Link className='btn btn-danger' to="/logOut">Log Out</Link>
                     </div>
                 </div>
                 <div className="MidControl">
@@ -133,12 +132,20 @@ const Create = (props) => {
                                     <input onChange={e => setTeammembers(e.target.value)} value={teammembers} /> <br />
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    Status:
+                                </td>
+                                <td>
+                                    <input type="checkbox" onChange={(e) => status ? setStatus(false):setStatus(true)} checked={status} /> <br />
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
-                    <button onClick={createProject}>Create Project</button>
+                    <button className='btn btn-success' onClick={createProject}>Create Project</button>
                 </form>
                 <button>
-                    <Link to="/profile">Cancel</Link>
+                    <Link className='btn btn-danger' to="/profile">Cancel</Link>
                 </button>
             </div>
         </>

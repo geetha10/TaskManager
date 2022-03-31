@@ -17,7 +17,8 @@ const ProjectSchema = new mongoose.Schema({
     },
     status:{
         // if ture: it means project is completed
-        type:Boolean
+        type:Boolean,
+        default:false
     },
     dueDate:{
         type:Date

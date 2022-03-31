@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const Update = (props) => {
 
     const history = useHistory();
-    const {id} = useParams();
+    const { id } = useParams();
     const [projectName, setProjectName] = useState("");
     const [description, setDescription] = useState("");
     const [priority, setPriority] = useState("");
@@ -36,7 +36,7 @@ const Update = (props) => {
             priority: priority,
 
         }
-    
+
         fetch("http://localhost:8000/api/projects/" + id, {
             method: "PUT",
             headers: {
@@ -64,11 +64,8 @@ const Update = (props) => {
                 <div className='topbar'>
                     <h1>Task Manager</h1>
                     <div className='topRight'>
-                <button><Link to="/profile">Home</Link></button>
-                <button>
-                    <Link to="/logOut">Log Out</Link>
-                </button>
-
+                        <Link className='btn btn-primary' to="/profile">Home</Link>
+                        <Link className='btn btn-danger' to="/logOut">Log Out</Link>
                     </div>
                 </div>
                 <div className="MidControl">
@@ -132,10 +129,10 @@ const Update = (props) => {
                             </tr>
                         </tbody>
                     </table>
-                    <button onClick={createProject}>Update Project</button>
+                    <button className='btn btn-success' onClick={createProject}>Update Project</button>
                 </form>
                 <button>
-                    <Link to="/profile">Cancel</Link>
+                    <Link className='btn btn-danger' to="/profile">Cancel</Link>
                 </button>
             </div>
         </>

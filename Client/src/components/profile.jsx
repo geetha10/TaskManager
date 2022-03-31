@@ -39,11 +39,8 @@ export function Profile() {
             <div className='topbar'>
                 <h1>Task Manager</h1>
                 <div className='topRight'>
-                    <button><Link to="/profile">Home</Link></button>
-                    <button>
-                        <Link to="/logOut">Log Out</Link>
-                    </button>
-
+                    <Link className='btn btn-primary' to="/profile">Home</Link>
+                    <Link className='btn btn-danger' to="/logOut">Log Out</Link>
                 </div>
             </div>
             {
@@ -52,8 +49,10 @@ export function Profile() {
                         <div className='projectCard mx-auto m-3' key={i}>
                             <h1>{project.projectName}</h1>
                             <p>{project.description}</p>
-                            <Link to={"/projects/" + project._id}>View Project</Link><span> || </span>
-                            <Link to={"/projects/" + project._id + "/edit"}>Edit Project</Link>
+                            <div>
+                                <Link to={"/projects/" + project._id}>View Project</Link><span> || </span>
+                                <Link to={"/projects/" + project._id + "/edit"}>Edit Project</Link>
+                            </div>
                         </div>
                     )
                 })

@@ -29,6 +29,7 @@ module.exports.createProject = async (req, res) => {
         dueDate: project.dueDate,
         teammembers: project.teammembers,
         priority: project.priority,
+        status:project.status,
         creator: user
     })
     dbProject.save();
