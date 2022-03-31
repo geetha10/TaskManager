@@ -1,8 +1,8 @@
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 
 export function Login() {
-    const history = useNavigate();
+    const history = useHistory();
 
     function handleLogin(e) {
         e.preventDefault();
@@ -15,29 +15,36 @@ export function Login() {
         fetch("http://localhost:8000/user/login", {
             method: "POST",
             headers: {
-                "Content-type" : "application/json",
+                "Content-type": "application/json",
             },
             body: JSON.stringify(user)
         })
-        .then(res => res.json())
-        .then(data => {localStorage.setItem("token", data.token)})
-        .then(data => {data.isLoggedIn ? history.push("/profile") : null})
+            .then(res => res.json())
+            .then(data => {
+                localStorage.setItem("token", data.token)
+                console.log("Logged In successfully")
+                //history.push("/profile")
+            })
+            .then(history.push("/profile"))
+            .catch(error =>(console.log(error)))
+        // .then(history.push("/profile"))
+        // .then(data => {data.isLoggedIn ? history.push("/profile") : null})
     }
 
     useEffect(() => {
         fetch("/user/isUserAuth", {
             headers: {
-                "x-access-token" : localStorage.getItem("token")
+                "x-access-token": localStorage.getItem("token")
             }
         })
-        .then(res => res.json())
-        .then(data => data.isLoggedIn ? history.push("/profile") : null)
+            .then(res => res.json())
+            .then(data => data.isLoggedIn ? history.push("/profile") : null)
     }, [])
 
-    return(
+    return (
         <form onSubmit={e => handleLogin(e)}>
-            <label>Username: </label><input required type="text"/><br/>
-            <label>Password: </label><input required type="password"/><br/>
+            <label>Username: </label><input required type="text" /><br />
+            <label>Password: </label><input required type="password" /><br />
             <button type="submit">Log In</button>
         </form>
     )
