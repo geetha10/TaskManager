@@ -1,11 +1,11 @@
 import { useHistory, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Create from './Create';
+
 
 export function Profile() {
     const history = useHistory();
-    const [items, setItems] = useState([]);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [projects, setProjects] = useState([]);
+    //const [isLoaded, setIsLoaded] = useState(false);
 
     function handleTaskSubmit(e) {
         e.preventDefault();
@@ -21,8 +21,8 @@ export function Profile() {
         fetch("http://localhost:8000/task/createTask", {
             method: "POST",
             headers: {
-                "Content-type" : "application/json",
-                "x-access-token" : localStorage.getItem("token")
+                "Content-type": "application/json",
+                "x-access-token": localStorage.getItem("token")
             },
             body: JSON.stringify(task)
         })
@@ -32,42 +32,55 @@ export function Profile() {
     useEffect(() => {
         fetch("/user/isUserAuth", {
             headers: {
-                "x-access-token" : localStorage.getItem("token")
+                "x-access-token": localStorage.getItem("token")
             }
         })
-        .then(res => res.json())
-        .then(data => data.isLoggedIn ? null : history.push("/"))
-    }, [])
+            .then(res => res.json())
+            .then(data => data.isLoggedIn ? null : history.push("/"))
+    }, projects)
     //This gets the viewTasks
-    // useEffect(() => {
-    //     fetch("http://localhost:8000/task/viewTasks", {
-    //         method: 'GET',
-    //         headers: {
-    //             "x-access-token" : localStorage.getItem("token")
-    //         }
-    //     })
-    //     .then(res => res.json())
-    //     .then(data => {setIsLoaded(true); setItems(data);})
-    // }, [])
+    useEffect(() => {
+        fetch("http://localhost:8000/api/projects", {
+            method: 'GET',
+            headers: {
+                "x-access-token": localStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log("All Projects Response:", data)
+                setProjects(data);
+            })
+    }, [])
 
-    return(
+    return (
         <div>
-            {/* <form onSubmit={e => handleTaskSubmit(e)}>
-                <label>Name: </label><input required type="text"/><br/>
-                <label>Comment: </label><input required type="textarea"/><br/>
-                <label>Timeframe: </label><select><option>Hours</option><option>Minutes</option><option>Seconds</option></select><br/>
-                <label>Duration: </label><input required type="number"/><br/>
-                <label>Complete: </label><input type="checkbox"/><br/>
-                <button type="submit">Create Task</button>
-            </form>
-            <div>
-                {
-                    JSON.stringify(items)
-                    // isLoaded ? <p>{items.tasks.name}</p> : <p>Loading...</p>
-                    
-                }
-            </div> */}
-            <Create/>
+            <div className='topbar'>
+                <h1>Task Manager</h1>
+                <div className='topRight'>
+                    <button><Link to="/">Home</Link></button>
+                    <button>
+                        <Link to="/">Log Out</Link>
+                    </button>
+
+                </div>
+            </div>
+            {
+                projects.map((project, i) => {
+                    return (
+                        <div className='projectCard mx-auto m-3' key={i}>
+                            <h1>{project.projectName}</h1>
+                            <p>{project.description}</p>
+                            <p>Created By: {project.creator.username}</p>
+                            <Link to={"/projects/" + project._id}>View Project</Link><span> || </span>
+                            <Link to={"/projects/" + project._id + "/edit"}>Edit Project</Link>
+                        </div>
+                    )
+                })
+            }
+            <div className='text-center'>
+                <Link className='btn btn-primary' to="/projects/new">Create a New Project</Link>
+            </div>
         </div>
 
     )

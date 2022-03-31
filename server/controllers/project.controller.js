@@ -4,7 +4,7 @@ const User = require("../models/user");
 
 // get all jobs
 module.exports.allProjects = (req, res) => {
-    Project.find({})
+    Project.find({}).populate("creator")
         .then(projects => res.json(projects))
         .catch(err => res.status(400).json(err))
 }
