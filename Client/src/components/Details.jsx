@@ -15,38 +15,38 @@ const Detail = (props) => {
     console.log(id);
 
     useEffect(() => {
-            fetch("http://localhost:8000/api/projects/" + id, {
-                method: 'GET',
-                headers: {
-                    "x-access-token" : localStorage.getItem("token")
-                }
-            })
+        fetch("http://localhost:8000/api/projects/" + id, {
+            method: 'GET',
+            headers: {
+                "x-access-token": localStorage.getItem("token")
+            }
+        })
             .then(res => res.json())
-            .then(data => {setIsLoaded(true); setThisProject(data);})
-        }, [])
+            .then(data => { setIsLoaded(true); setThisProject(data); })
+    }, [])
 
     useEffect(() => {
         fetch(`http://localhost:8000/api/tasks/${id}`, {
             method: 'GET',
             headers: {
-                "x-access-token" : localStorage.getItem("token")
+                "x-access-token": localStorage.getItem("token")
             }
         })
-        .then(res => res.json())
-        .then(data => {setIsLoaded2(true); setTasks(data);})
+            .then(res => res.json())
+            .then(data => { setIsLoaded2(true); setTasks(data); })
     }, [])
 
     function handleProjectDelete() {
         fetch("http://localhost:8000/api/projects/" + id, {
-                method: 'DELETE',
-                headers: {
-                    "x-access-token" : localStorage.getItem("token")
-                }
-            })
+            method: 'DELETE',
+            headers: {
+                "x-access-token": localStorage.getItem("token")
+            }
+        })
             //Todo: push to projectid
             .then(a => history.push(`/profile`));
-            
-            
+
+
     }
 
     return (
@@ -54,11 +54,8 @@ const Detail = (props) => {
             <div className='topbar'>
                 <h1>Task Manager</h1>
                 <div className='topRight'>
-                <button><Link to="/profile">Home</Link></button>
-                    <button>
-                        <Link to="/logOut">Log Out</Link>
-                    </button>
-
+                    <Link className='btn btn-primary' to="/profile">Home</Link>
+                    <Link className='btn btn-danger' to="/logOut">Log Out</Link>
                 </div>
             </div>
             <div className="MidControl">
@@ -100,16 +97,19 @@ const Detail = (props) => {
                                     <input type="text" />    <button>send</button>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td>
+                                    <input type="checkbox" checked={thisProject.status} /> 
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            {
-                JSON.stringify(tasks)
-            }
             <div className='task-control'>
 
-                <div className='task-list'> 
+                <div className='task-list'>
                     {
                         tasks.map((task, idx) => {
                             return (
@@ -122,10 +122,10 @@ const Detail = (props) => {
                         })
                     }
 
-            </div>
+                </div>
                 <div className='add-task'>
                     <Link to={"/tasks/" + thisProject._id}>Add Task</Link>
-            </div>
+                </div>
             </div>
             <div className='edit-delete'>
                 <button className='edit-btn'><Link to={"/projects/" + thisProject._id + "/edit"} className='bLink'>Edit</Link></button><button onClick={handleProjectDelete}>Delete</button>
