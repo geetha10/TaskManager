@@ -54,9 +54,9 @@ const Detail = (props) => {
             <div className='topbar'>
                 <h1>Task Manager</h1>
                 <div className='topRight'>
-                    <button><Link to="/">Home</Link></button>
+                <button><Link to="/profile">Home</Link></button>
                     <button>
-                        <Link to="/">Log Out</Link>
+                        <Link to="/logOut">Log Out</Link>
                     </button>
 
                 </div>
@@ -128,7 +128,7 @@ const Detail = (props) => {
             </div>
             </div>
             <div className='edit-delete'>
-                <button className='edit-btn'><Link to={"/projects/update/" + id } className='bLink'>Edit</Link></button><button onClick={handleProjectDelete}>Delete</button>
+                <button className='edit-btn'><Link to={"/projects/" + thisProject._id + "/edit"} className='bLink'>Edit</Link></button><button onClick={handleProjectDelete}>Delete</button>
             </div>
         </>
     )

@@ -67,10 +67,10 @@ const Create = (props) => {
                 <div className='topbar'>
                     <h1>Task Manager</h1>
                     <div className='topRight'>
-                        <button><Link to="/">Home</Link></button>
-                        <button>
-                            <Link to="/">Log Out</Link>
-                        </button>
+                <button><Link to="/profile">Home</Link></button>
+                <button>
+                    <Link to="/logOut">Log Out</Link>
+                </button>
 
                     </div>
                 </div>

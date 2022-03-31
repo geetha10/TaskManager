@@ -55,6 +55,9 @@ function App() {
         <Route exact path={"/login"} >
           <Login />
         </Route>
+        <Route exact path={"/logout"} >
+          <Login />
+        </Route>
         <Route exact path={"/profile"} >
           <Profile/>
         </Route>
