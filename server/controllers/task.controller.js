@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const { Task} = require("../models/task.model")
 const { Project } = require("../models/project.model")
 
@@ -49,4 +50,21 @@ module.exports.addTask2 = async(req, res) => {
         res.status(400).json(err)
     }
 
+}
+
+// edit a task
+module.exports.editTask = (req, res) => {
+    Task.findOneAndUpdate(
+        { _id: req.params.id },
+        req.body,
+        { new: true, runValidators: true })
+        .then(response => res.json(response))
+        .catch(err => res.status(400).json(err))
+}
+
+module.exports.oneTask = (req, res) => {
+    console.log(req.params.id)
+    Task.findById(mongoose.Types.ObjectId(req.params.id))
+        .then(oneTask => res.json(oneTask))
+        .catch(err => res.status(400).json(err))
 }

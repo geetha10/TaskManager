@@ -8,7 +8,9 @@ import style from "./style.css"
 const Detail = (props) => {
     const [thisProject, setThisProject] = useState({});
     const { id } = useParams();
+    const [tasks, setTasks] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoaded2, setIsLoaded2] = useState(false);
     console.log(id);
 
     useEffect(() => {
@@ -21,6 +23,18 @@ const Detail = (props) => {
             .then(res => res.json())
             .then(data => {setIsLoaded(true); setThisProject(data);})
         }, [])
+
+            //This gets the viewTasks
+    useEffect(() => {
+        fetch(`http://localhost:8000/api/tasks/${id}`, {
+            method: 'GET',
+            headers: {
+                "x-access-token" : localStorage.getItem("token")
+            }
+        })
+        .then(res => res.json())
+        .then(data => {setIsLoaded2(true); setTasks(data);})
+    }, [])
 
     return (
         <>
@@ -77,32 +91,32 @@ const Detail = (props) => {
                     </table>
                 </div>
             </div>
-            {/* <div className='task-control'> */}
+            {
+                JSON.stringify(tasks)
+            }
+            <div className='task-control'>
 
-                {/* <div className='task-list'> */}
+                <div className='task-list'> 
                     {
-                        // tasks.map((task, idx) => {
-                        //     return (
-                        //         <div className='taskCard' key={task._id} >
-                        //             <img className='taskImg' src={task.url} alt={task.name} />
-                        //             <h5>
-                        //                 <Link to={"/tasks/" + task._id} className='bLink'>{task.name}</Link>
-                        //             </h5>
-                        //         </div>
-                        //     )
-                        // })
+                        tasks.map((task, idx) => {
+                            return (
+                                <div className='taskCard' key={task._id} >
+                                    <h5>
+                                        <Link to={"/task/" + task._id} className='bLink'>{task.taskName}</Link>
+                                    </h5>
+                                </div>
+                            )
+                        })
                     }
-                    {/* <a href="/">Task1</a>
-                    <a href="/">Task2</a>
 
-                </div>
+            </div>
                 <div className='add-task'>
-                    <button>Add Task</button>
-                </div>
+                    <Link to={"/tasks/" + thisProject._id}>Add Task</Link>
+            </div>
             </div>
             <div className='edit-delete'>
-                <button className='edit-btn'><Link to={"/projects/update/" + project._id } className='bLink'>Edit</Link></button><button>Delete</button>
-            </div> */}
+                <button className='edit-btn'><Link to={"/projects/update/" + id } className='bLink'>Edit</Link></button><button>Delete</button>
+            </div>
         </>
     )
 }

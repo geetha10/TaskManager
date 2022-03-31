@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const { Project } = require("../models/project.model")
 const User = require("../models/user");
 
@@ -11,7 +12,7 @@ module.exports.allProjects = (req, res) => {
 
 // get one job
 module.exports.oneProject = (req, res) => {
-    Project.findOne({ _id: req.params.id })
+    Project.findById(mongoose.Types.ObjectId(req.params.id))
         .then(oneProject => res.json(oneProject))
         .catch(err => res.status(400).json(err))
 }
