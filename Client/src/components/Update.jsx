@@ -13,10 +13,7 @@ const Create = (props) => {
     const [priority, setPriority] = useState("");
     const [teammembers, setTeammembers] = useState("");
     const [dueDate, setDuedate] = useState("")
-
-
     const [errors, setErrors] = useState([]);
-
 
     const priorityList = [
         "Low",
@@ -39,7 +36,7 @@ const Create = (props) => {
             priority: priority,
 
         }
-        // POST to the db, with the obj
+    
         fetch("http://localhost:8000/api/projects/" + id, {
             method: "PUT",
             headers: {
