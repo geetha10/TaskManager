@@ -5,7 +5,7 @@ const User = require("../models/user");
 
 // get all jobs
 module.exports.allProjects = (req, res) => {
-    Project.find({}).populate("creator")
+    Project.find({})
         .then(projects => res.json(projects))
         .catch(err => res.status(400).json(err))
 }
@@ -20,7 +20,9 @@ module.exports.oneProject = (req, res) => {
 // create a Project
 module.exports.createProject = async (req, res) => {
     const project = req.body;
+    console.log("UserName form req", req.user.username)
     const user = await User.findOne({ username: req.user.username })
+    console.log("User frmm DB", user)
     const dbProject = new Project({
         projectName: project.projectName,
         description: project.description,
