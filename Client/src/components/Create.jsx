@@ -30,11 +30,11 @@ const Create = (props) => {
     const createProject = (e) => {
         e.preventDefault();
 
-        console.log("In createProject method", projectName)
+        console.log("In createProject method", dueDate)
         const newProject = {
             projectName: projectName,
             description: description,
-            dueDate: dueDate,
+            dueDate: Date(dueDate),
             teammembers: teammembers,
             priority: priority,
 

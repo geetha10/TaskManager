@@ -24,7 +24,7 @@ module.exports.createProject = async (req, res) => {
     const dbProject = new Project({
         projectName: project.projectName,
         description: project.description,
-        duedate: project.duedate,
+        dueDate: project.dueDate,
         teammembers: project.teammembers,
         priority: project.priority,
         creator: user
