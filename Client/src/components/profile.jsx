@@ -6,28 +6,6 @@ export function Profile() {
     const history = useHistory();
     const [projects, setProjects] = useState([]);
     //const [isLoaded, setIsLoaded] = useState(false);
-
-    function handleTaskSubmit(e) {
-        e.preventDefault();
-
-        const form = e.target;
-        const task = {
-            name: form[0].value,
-            comment: form[1].value,
-            timeframe: form[2].value,
-            duration: form[3].value,
-            complete: form[4].ch
-        }
-        fetch("http://localhost:8000/task/createTask", {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-                "x-access-token": localStorage.getItem("token")
-            },
-            body: JSON.stringify(task)
-        })
-        //May need to rerender on change
-    }
     //This verifies that the user is logged
     useEffect(() => {
         fetch("/user/isUserAuth", {
@@ -36,9 +14,12 @@ export function Profile() {
             }
         })
             .then(res => res.json())
-            .then(data => data.isLoggedIn ? null : history.push("/"))
+            .then(data => {
+                console.log("User Auth response", data)
+                return data.isLoggedIn ? null : history.push("/")
+            })
     }, projects)
-    //This gets the viewTasks
+    //This gets the All projects from DB
     useEffect(() => {
         fetch("http://localhost:8000/api/projects", {
             method: 'GET',
@@ -48,7 +29,7 @@ export function Profile() {
         })
             .then(res => res.json())
             .then(data => {
-                console.log("All Projects Response:", data)
+                console.log("Response is: ", data)
                 setProjects(data);
             })
     }, [])
@@ -71,7 +52,6 @@ export function Profile() {
                         <div className='projectCard mx-auto m-3' key={i}>
                             <h1>{project.projectName}</h1>
                             <p>{project.description}</p>
-                            <p>Created By: {project.creator.username}</p>
                             <Link to={"/projects/" + project._id}>View Project</Link><span> || </span>
                             <Link to={"/projects/" + project._id + "/edit"}>Edit Project</Link>
                         </div>
