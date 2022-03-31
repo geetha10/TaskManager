@@ -1,8 +1,8 @@
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 
 export function Register() {
-    const history = useNavigate();
+    const history = useHistory();
 
     async function handleRegister(e) {
         e.preventDefault();

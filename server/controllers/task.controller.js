@@ -1,47 +1,52 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const Task = require("../models/task.js");
-const User = require("../models/user.js");
+const { Task} = require("../models/task.model")
+const { Project } = require("../models/project.model")
 
-module.exports = {
-    createTask : async (req, res) => {
-        const task = req.body;
-        const user = await User.findOne({username : req.user.username})
-        const dbTask = new Task({
-            name : task.name,
-            comment: task.comment,
-            timeframe: task.timeframe,
-            duration: task.duration,
-            complete: task.complete,
-            user: user
-        });
-        console.log(dbTask)
-        dbTask.save();
-        res.json({message: "PogO"});
-    },
+module.exports.allTasks = (req, res) => {
+    Task.find()
+        .then(tasks=>res.json(tasks))
+        .catch(err=>res.status(400).json(err))
+}
 
-    viewTasks : async (req, res) => {
 
-        console.log("view tasks")
-        const user = await User.findOne({username : req.user.username})
+// get all comments of a job
+module.exports.tasksOfOneProject = (req, res) => {
+    Task.find({project: req.params.projectId})
+        .then(tasks=>res.json(tasks))
+        .catch(err=>res.status(400).json(err))
+}
 
-        let tasks = await Task.find({user : user}).lean();
-        let userMap = new Map();
-        userMap.set(user._id, user.username);
-        for(let i = 0; i < tasks.length; i++) {
-            tasks[i].user = user.username;
-        }
 
-        // for(let task in tasks) {
-        //     if(!userMap.has(task.user)) {
-        //         let username = await User.findOne({_id : task.user}).username;
-        //         userMap.set(task.user, username);
-        //         task.user = username;
-        //     } else {
-        //         task.user = userMap.get(task.user);
-        //     }
-        // }
+// add a task
+module.exports.addTask = (req, res) => {
+    const projectId = req.params.projectId
+    const newTask = new Task(req.body)
+    newTask.project = projectId
+    newTask.save()
+        .then(task=>{
+            const project = Project.findOne({_id: projectId})
+                .then(foundProject=>{
+                    foundProject.tasks.push(newTask)
+                    foundProject.save()
+                        .then(response=>res.json(response))
+                })
+        })
+        .catch(err=>res.status(400).json(err))
+}
 
-        res.json({tasks: tasks});
+// add a task
+module.exports.addTask2 = async(req, res) => {
+    try{
+        const newTask = new Task(req.body)
+        newTask.project = req.params.projectId
+        await newTask.save()
+    
+        const project = await Project.findOne({_id:req.params.projectId})
+        project.tasks.push(newTask)
+        await project.save()
+        
+        res.json(newTask)
+    }catch(err){
+        res.status(400).json(err)
     }
+
 }

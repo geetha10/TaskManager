@@ -1,8 +1,9 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Create from './Create';
 
 export function Profile() {
-    const history = useNavigate();
+    const history = useHistory();
     const [items, setItems] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -38,20 +39,20 @@ export function Profile() {
         .then(data => data.isLoggedIn ? null : history.push("/"))
     }, [])
     //This gets the viewTasks
-    useEffect(() => {
-        fetch("http://localhost:8000/task/viewTasks", {
-            method: 'GET',
-            headers: {
-                "x-access-token" : localStorage.getItem("token")
-            }
-        })
-        .then(res => res.json())
-        .then(data => {setIsLoaded(true); setItems(data);})
-    }, [])
+    // useEffect(() => {
+    //     fetch("http://localhost:8000/task/viewTasks", {
+    //         method: 'GET',
+    //         headers: {
+    //             "x-access-token" : localStorage.getItem("token")
+    //         }
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => {setIsLoaded(true); setItems(data);})
+    // }, [])
 
     return(
         <div>
-            <form onSubmit={e => handleTaskSubmit(e)}>
+            {/* <form onSubmit={e => handleTaskSubmit(e)}>
                 <label>Name: </label><input required type="text"/><br/>
                 <label>Comment: </label><input required type="textarea"/><br/>
                 <label>Timeframe: </label><select><option>Hours</option><option>Minutes</option><option>Seconds</option></select><br/>
@@ -65,7 +66,8 @@ export function Profile() {
                     // isLoaded ? <p>{items.tasks.name}</p> : <p>Loading...</p>
                     
                 }
-            </div>
+            </div> */}
+            <Create/>
         </div>
 
     )
