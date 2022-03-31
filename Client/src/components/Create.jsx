@@ -5,11 +5,12 @@ import { Link } from 'react-router-dom';
 import style from "./style.css"
 
 
+
 const Create = (props) => {
 
     const history = useHistory()
 
-    const [name, setName] = useState("");
+    const [projectName, setProjectName] = useState("");
     const [description, setDescription] = useState("");
     const [priority, setPriority] = useState("");
     const [teammembers, setTeammembers] = useState("");
@@ -39,55 +40,34 @@ const Create = (props) => {
     // }
 
 
-    //dynamic validation
-    // let nameErr="";
-    // let descriptionErr="";
-    // let chestErr="";
-    // let teammembersErr="";
-    // let priorityErr="";
-
-    // if(name.length==0){
-    //     nameErr="Name is required!";
-    //     // console.log("empty");
-    // }else{
-    //     // setNameErr("");
-    //     nameErr="";
-    //     // console.log("not empty");
-    // }
-    // if(description.length==0){
-    //     descriptionErr="description is required!";
-    // }else{
-    //     descriptionErr="";
-    // }
-    // if(teammembers.length==0){
-    //     teammembersErr="teammembers is required!";
-    // }else{
-    //     teammembersErr="";
-    // }
-    // if(priority.length==0){
-    //     priorityErr="priority is required!";
-    // }else{
-    //     priorityErr="";
-    // }
-
 
     const createProject = (e) => {
         e.preventDefault();
-        // console.log(title, content, isImportant);
-
+        //const user =  User.findOne({username : req.user.username})
+        //const form = e.target;
+        console.log("In createProject method", projectName)
         const newProject = {
-            name: name,
+            projectName: projectName,
             description: description,
             duedate: duedate,
             teammembers: teammembers,
             priority: priority,
+            //creator : user
         }
         // POST to the db, with the obj
-        // axios.post("http://localhost:8000/api/pirates", newProject)
+        fetch("http://localhost:8000/api/projects", {
+            method: "POST",
+            headers: {
+                "Content-type" : "application/json",
+                "x-access-token" : localStorage.getItem("token")
+            },
+            body: JSON.stringify(newProject)
+        })
+        // axios.post("http://localhost:8000/api/projects", newProject)
         //     .then(res => {
         //         console.log(res.data);
         //         console.log("SUCCESS CLIENT");
-        //         history.push("/")
+        //         history.push("/profile")
         //     })
         //     .catch(err => {
         //         console.log("❌ ERROR CLIENT")
@@ -101,6 +81,16 @@ const Create = (props) => {
 
         //     })
     }
+
+    useEffect(() => {
+        fetch("/user/isUserAuth", {
+            headers: {
+                "x-access-token" : localStorage.getItem("token")
+            }
+        })
+        .then(res => res.json())
+        .then(data => data.isLoggedIn ? null : history.push("/"))
+    }, [])
 
     return (
         <>
@@ -133,7 +123,7 @@ const Create = (props) => {
 
                                 </td>
                                 <td>
-                                    <input onChange={e => setName(e.target.value)} value={name} /> <br />
+                                    <input onChange={e => setProjectName(e.target.value)} value={projectName} /> <br />
 
                                 </td>
                             </tr>
@@ -176,11 +166,6 @@ const Create = (props) => {
                             </tr>
                         </tbody>
                     </table>
-                    {/* <p>{nameErr}</p> */}
-                    {/* <p>{descriptionErr}</p> */}
-                    {/* <p>{priorityErr}</p> */}
-                    {/* <p>{duedateErr}</p> */}
-                    {/* <p>{teammembersErr}</p> */}
                     <button>Create Project</button>
                 </form>
                 <button>
