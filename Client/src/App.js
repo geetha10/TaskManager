@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import Main from './components/Main';
 import Details from './components/Details';
-import Create from './components/Create';
+import {Create} from './components/Create';
 import Update from './components/Update';
 import {NewTask} from './components/NewTask';
 import {UpdateTask} from './components/UpdateTask';
