@@ -99,9 +99,10 @@ const Detail = (props) => {
                             </tr>
                             <tr>
                                 <td>Status</td>
-                                <td>
-                                    <input type="checkbox" checked={thisProject.status} /> 
-                                </td>
+                                {
+                                    thisProject.status ? <td>Complete</td> : <td>Ongoing</td>
+                                } 
+                            
                             </tr>
                         </tbody>
                     </table>
