@@ -1,5 +1,9 @@
+<<<<<<< Updated upstream
 import logo from './logo.svg';
 // import './App.css';
+=======
+import './App.css';
+>>>>>>> Stashed changes
 import {
   Switch,
   Route,
@@ -8,18 +12,43 @@ import {
 import Main from './components/Main';
 import Details from './components/Details';
 import Create from './components/Create';
+<<<<<<< Updated upstream
 import Update from './components/Update'
 import CreateTask from './components/CreateTask';
 import UpdateTask from './components/UpdateTask';
 import DetailTask from './components/DetailTask';
 import  Login  from './components/login';
+=======
+import Update from './components/Update';
+import { NewTask } from './components/NewTask';
+import { UpdateTask } from './components/UpdateTask';
+import { ViewOneTask } from './components/ViewOneTask';
+>>>>>>> Stashed changes
 import style from "./components/style.css"
 
 function App() {
   return (
     <div className="App">
       <Switch>
+<<<<<<< Updated upstream
         {/* project create */}
+=======
+        {/* route long to short */}
+        {/* <Routes> */}
+
+        <Route exact path="/task/update/:id">
+          <UpdateTask />
+        </Route>
+
+        <Route exact path="/tasks/:projectId">
+          <NewTask />
+        </Route>
+
+        <Route exact path="/task/:id">
+          <ViewOneTask />
+        </Route>
+
+>>>>>>> Stashed changes
         <Route path="/projects/new">
           <Create />
         </Route>
@@ -47,12 +76,19 @@ function App() {
         <Route path="/task/:id">
           <DetailTask />
         </Route>
+<<<<<<< Updated upstream
         {/* login/reg */}
         <Route path="/login">
           <Login/>
         </Route>
         {/* in case of random routes */}
         <Route path="/">
+=======
+        <Route exact path={"/profile"} >
+          <Redirect to="/projects" />
+        </Route>
+        <Route exact path={"/"}>
+>>>>>>> Stashed changes
           <Redirect to="/projects" />
         </Route>
       </Switch>

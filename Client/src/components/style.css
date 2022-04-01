@@ -35,7 +35,11 @@
 .barimg{
     width: auto;
 }
-
+.projectCard{
+    
+    width: 100%;
+    background-color: aqua;
+}
 .proj-list{
     border: 1px black solid;
     margin-top: 20px;
@@ -60,4 +64,9 @@
     display: flex;
     justify-content: right;
     padding:10px
+}
+.controlbtn{
+
+    display: flex;
+    align-items: center;
 }

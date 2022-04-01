@@ -4,6 +4,10 @@ import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import style from "./style.css"
 import 'bootstrap/dist/css/bootstrap.css';
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 const Detail = (props) => {
     const [project, setProject] = useState({});
@@ -14,6 +18,7 @@ const Detail = (props) => {
     const { id } = useParams();
     console.log(id);
 
+<<<<<<< Updated upstream
     // useEffect(() => {
     //     axios.get('http://localhost:8000/api/projects/' + id)
     //         .then(res => {
@@ -31,29 +36,69 @@ const Detail = (props) => {
     //         })
     //         .catch(err => console.error(err));
     // }, [id]);
+=======
+    useEffect(() => {
+        fetch("http://localhost:8000/api/projects/" + id, {
+            method: 'GET',
+            headers: {
+                "x-access-token": localStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(data => { setIsLoaded(true); setThisProject(data); })
+    }, [])
+
+    useEffect(() => {
+        fetch(`http://localhost:8000/api/tasks/${id}`, {
+            method: 'GET',
+            headers: {
+                "x-access-token": localStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(data => { setIsLoaded2(true); setTasks(data); })
+    }, [])
+
+    function handleProjectDelete() {
+        fetch("http://localhost:8000/api/projects/" + id, {
+            method: 'DELETE',
+            headers: {
+                "x-access-token": localStorage.getItem("token")
+            }
+        })
+            //Todo: push to projectid
+            .then(a => history.push(`/profile`));
+
+
+    }
+>>>>>>> Stashed changes
 
     return (
         <>
             <div className='topbar'>
                 <h1>Task Manager</h1>
                 <div className='topRight'>
+<<<<<<< Updated upstream
                     <button className='btn btn-info'><Link to="/">Home</Link></button>
                     <button className='btn btn-info'>
                         <Link to="/">Log Out</Link>
                     </button>
 
+=======
+                    <Link className='btn btn-primary' to="/">Home</Link>
+                    <Link className='btn btn-danger' to="/logOut">Log Out</Link>
+>>>>>>> Stashed changes
                 </div>
             </div>
             <div className="MidControl">
                 <div className='welcome'>
-                    <h2>Welcome, userName or first name</h2>
 
                 </div>
             </div>
 
             <div className='mainDisplay'>
                 <br />
-                <h2>View One</h2><br />
+                <h2>Project Details</h2><br />
                 <div>
                     <table className='table'>
                         <tbody>
@@ -78,8 +123,15 @@ const Detail = (props) => {
                                 <td>{duration}</td>
                             </tr>
                             <tr>
+<<<<<<< Updated upstream
                                 <td>Team Members:</td>
                                 <td>{project.teamMembers}</td>
+=======
+                                <td>Invite a friend:</td>
+                                <td>
+                                    <input type="text" />    <button className='btn btn-primary'>send</button>
+                                </td>
+>>>>>>> Stashed changes
                             </tr>
                             <tr>
                                 <td>Invite a friend:</td>
@@ -111,12 +163,20 @@ const Detail = (props) => {
 
                 </div>
                 <div className='add-task'>
+<<<<<<< Updated upstream
                     <button className='btn btn-success'>Add Task</button>
                 </div>
             </div>
             <div className='edit-delete'>
                 <Link to={"/projects/" + project._id+"/edit" } className='btn btn-warning'>Edit</Link>
                 <button className='btn btn-danger'>Delete</button>
+=======
+                    <Link className='btn btn-success' to={"/tasks/" + thisProject._id}>Add Task</Link>
+                </div>
+            </div>
+            <div className='edit-delete'>
+                <Link  to={"/projects/" + thisProject._id + "/edit"} className='btn btn-warning'>Edit</Link><button className='btn btn-danger' onClick={handleProjectDelete}>Delete</button>
+>>>>>>> Stashed changes
             </div>
         </>
     )

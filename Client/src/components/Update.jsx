@@ -8,13 +8,24 @@ function Update(props) {
 
     const history = useHistory()
 
+<<<<<<< Updated upstream
     const [name, setName] = useState("");
+=======
+    const history = useHistory();
+    const { id } = useParams();
+    const [projectName, setProjectName] = useState("");
+>>>>>>> Stashed changes
     const [description, setDescription] = useState("");
+    const [status, setStatus]=useState(false);
     const [priority, setPriority] = useState("");
     const [teammembers, setTeammembers] = useState("");
+<<<<<<< Updated upstream
     const [duedate, setDuedate] = useState("")
 
 
+=======
+    const [dueDate, setDuedate] = useState("")
+>>>>>>> Stashed changes
     const [errors, setErrors] = useState([]);
 
 
@@ -27,6 +38,7 @@ function Update(props) {
 
     const [projects, setProjects] = useState([]);
 
+<<<<<<< Updated upstream
     // useEffect(() => {
     //     axios.get('http://localhost:8000/api/tasks/' + id)
     //     .then(res=> {
@@ -75,6 +87,62 @@ function Update(props) {
             }
             <form onSubmit={updateProject} className='mx-auto col-5'>
             <table className='table'>
+=======
+    const createProject = (e) => {
+        e.preventDefault();
+
+        console.log("In createProject method", projectName)
+        const updatedProject = {
+            projectName: projectName,
+            description: description,
+            dueDate: dueDate,
+            teammembers: teammembers,
+            priority: priority,
+            status:status
+
+        }
+
+        fetch("http://localhost:8000/api/projects/" + id, {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json",
+                "x-access-token": localStorage.getItem("token")
+            },
+            body: JSON.stringify(updatedProject)
+        })
+        history.push("/")
+    }
+
+    useEffect(() => {
+        fetch("/user/isUserAuth", {
+            headers: {
+                "x-access-token": localStorage.getItem("token")
+            }
+        })
+            .then(res => res.json())
+            .then(data => data.isLoggedIn ? null : history.push("/"))
+    }, [])
+
+    return (
+        <>
+            <div>
+                <div className='topbar'>
+                    <h1>Task Manager</h1>
+                    <div className='topRight'>
+                        <Link className='btn btn-primary' to="/">Home</Link>
+                        <Link className='btn btn-danger' to="/logOut">Log Out</Link>
+                    </div>
+                </div>
+                <div className="MidControl">
+                    <div className='welcome'>
+
+                    </div>
+                </div>
+
+                {errors.map((err, index) => <p style={{ color: "red" }} key={index}>{err}</p>)}
+                <form onSubmit={createProject}>
+                    <table className='table'>
+>>>>>>> Stashed changes
                         <tbody>
                             <tr>
                                 <td>
@@ -126,6 +194,7 @@ function Update(props) {
                             </tr>
                         </tbody>
                     </table>
+<<<<<<< Updated upstream
                     {/* <p>{nameErr}</p> */}
                     {/* <p>{descriptionErr}</p> */}
                     {/* <p>{priorityErr}</p> */}
@@ -136,6 +205,15 @@ function Update(props) {
                 
             </form>
         </div>
+=======
+                    <button className='btn btn-success' onClick={createProject}>Update Project</button>
+                    <Link className='btn btn-danger' to={`/projects/${id}`}>Cancel</Link>
+                </form>
+
+
+            </div>
+        </>
+>>>>>>> Stashed changes
     )
 }
 

@@ -11,7 +11,12 @@ const Create = (props) => {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+<<<<<<< Updated upstream
     const [priority, setPriority] = useState("");
+=======
+    const [status, setStatus]= useState(false)
+    const [priority, setPriority] = useState("Low");
+>>>>>>> Stashed changes
     const [teammembers, setTeammembers] = useState("");
     const [duedate, setDuedate] = useState("")
 
@@ -78,11 +83,16 @@ const Create = (props) => {
         const newProject = {
             name: name,
             description: description,
+<<<<<<< Updated upstream
             duedate: duedate,
+=======
+            dueDate: dueDate,
+>>>>>>> Stashed changes
             teammembers: teammembers,
             priority: priority,
         }
         // POST to the db, with the obj
+<<<<<<< Updated upstream
         // axios.post("http://localhost:8000/api/pirates", newProject)
         //     .then(res => {
         //         console.log(res.data);
@@ -100,6 +110,17 @@ const Create = (props) => {
         //         setErrors(messages);
 
         //     })
+=======
+        fetch("http://localhost:8000/api/projects", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+                "x-access-token": localStorage.getItem("token")
+            },
+            body: JSON.stringify(newProject)
+        })
+        history.push("/profile")
+>>>>>>> Stashed changes
     }
 
     return (
@@ -108,11 +129,16 @@ const Create = (props) => {
                 <div className='topbar'>
                     <h1>Task Manager</h1>
                     <div className='topRight'>
+<<<<<<< Updated upstream
                         <button className='btn btn-info'><Link to="/">Home</Link></button>
                         <button className='btn btn-info'>
                             <Link to="/">Log Out</Link>
                         </button>
 
+=======
+                        <Link className='btn btn-primary' to="/profile">Home</Link>
+                        <Link className='btn btn-danger' to="/logOut">Log Out</Link>
+>>>>>>> Stashed changes
                     </div>
                 </div>
                 <div className="MidControl">
@@ -176,6 +202,7 @@ const Create = (props) => {
                             </tr>
                         </tbody>
                     </table>
+<<<<<<< Updated upstream
                     {/* <p>{nameErr}</p> */}
                     {/* <p>{descriptionErr}</p> */}
                     {/* <p>{priorityErr}</p> */}
@@ -188,6 +215,13 @@ const Create = (props) => {
 
                 </form>
 
+=======
+                    <button className='btn btn-success' onClick={createProject}>Create Project</button>
+                </form>
+                <button>
+                    <Link className='btn btn-danger' to="/profile">Cancel</Link>
+                </button>
+>>>>>>> Stashed changes
             </div>
         </>
     )

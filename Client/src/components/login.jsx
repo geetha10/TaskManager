@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 // import { useNavigate } from 'react-router-dom';
+=======
+import { useHistory ,Link} from 'react-router-dom';
+>>>>>>> Stashed changes
 import { useEffect } from 'react';
 import style from "./style.css"
 import 'bootstrap/dist/css/bootstrap.css';
@@ -15,6 +19,7 @@ const Login = (props) => {
             username: form[0].value,
             password: form[1].value
         }
+<<<<<<< Updated upstream
         // fetch("http://localhost:8000/user/login", {
         //     method: "POST",
         //     headers: {
@@ -24,6 +29,24 @@ const Login = (props) => {
         // })
         // .then(res => res.json())
         // .then(data => {localStorage.setItem("token", data.token)})
+=======
+        fetch("http://localhost:8000/user/login", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                localStorage.setItem("token", data.token)
+                console.log("Logged In successfully")
+                //history.push("/profile")
+            })
+            .then(history.push("/"))
+            .catch(error => (console.log(error)))
+        // .then(history.push("/profile"))
+>>>>>>> Stashed changes
         // .then(data => {data.isLoggedIn ? history.push("/profile") : null})
     }
 
@@ -77,6 +100,7 @@ const Login = (props) => {
 
     return (
         <>
+<<<<<<< Updated upstream
             <div className='container d-flex justify-content-around'>
                 <div className='reg'>
                     <h3>Don't have a account yet? Register here!</h3>
@@ -164,6 +188,32 @@ const Login = (props) => {
                     </form>
                 </div>
             </div>
+=======
+            <form onSubmit={e => handleLogin(e)}>
+                <table className='table'>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label>Username: </label>
+                            </td>
+                            <td>
+                                <input required type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Password: </label>
+                            </td>
+                            <td>
+                                <input required type="password" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" className='btn btn-primary'>Log In</button>
+            </form>
+            Don't have an account yet? Click <Link to="/register">HERE</Link> to register!
+>>>>>>> Stashed changes
         </>
     )
 
