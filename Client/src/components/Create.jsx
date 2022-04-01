@@ -11,7 +11,7 @@ const Create = (props) => {
     const [projectName, setProjectName] = useState("");
     const [description, setDescription] = useState("");
     const [status, setStatus]= useState(false)
-    const [priority, setPriority] = useState("");
+    const [priority, setPriority] = useState("Low");
     const [teammembers, setTeammembers] = useState("");
     const [dueDate, setDuedate] = useState("")
 
